@@ -6,7 +6,7 @@ export const validateReqMiddleware = (req, res, next) => {
   if (!errs.isEmpty()) {
     return res.status(422).json({
       description: errs.array(),
-      status: 'failed'
+      status: 'failed',
     });
   }
 
