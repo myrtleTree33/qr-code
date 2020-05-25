@@ -1,8 +1,6 @@
-# Node ES6 boilerplate
+# QR Code generator
 
-Boilerplate for Node ES6 + Express JS + Logging
-
-Linter, transpiling, Prettier included.
+Express App to generate QR codes.
 
 ## Installation
 
