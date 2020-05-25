@@ -1,0 +1,12 @@
+{
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier", "import"],
+  "rules": {
+    "eslint quotes": ["error", "single"],
+    "comma-dangle": ["error", "always-multiline"],
+    "import/prefer-default-export": "off",
+    "max-len": ["error", { "code": 100 }],
+    "array-element-newline": ["error", "consistent"],
+    "array-bracket-newline": ["error", "consistent"]
+  }
+}
