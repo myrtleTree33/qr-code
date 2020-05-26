@@ -35,4 +35,19 @@ routes.post(
   }
 );
 
+routes.post('/convert', [], validateReqMiddleware, async (req, res) => {
+  try {
+    const { logo } = req.files;
+
+    const b64Str = logo.data.toString('base64');
+
+    return res.json({ b64Str });
+  } catch (e) {
+    return res.status(400).json({
+      description: e.message,
+      status: 'failed',
+    });
+  }
+});
+
 export default routes;

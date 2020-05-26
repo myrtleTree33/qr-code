@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import duration from 'dayjs/plugin/duration';
 import dayjs from 'dayjs';
+import fileUpload from 'express-fileupload';
 
 import { logger, loggingMiddleware } from './utils/logger';
 import { initDb } from './utils/db';
@@ -18,7 +19,7 @@ dayjs.extend(duration);
 const app = express();
 
 // Initialize DB
-initDb(MONGO_URI);
+// initDb(MONGO_URI);
 
 // cors
 const corsOptions = {
@@ -31,6 +32,8 @@ app.use(loggingMiddleware());
 app.use(loggingMiddleware());
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
+// file upload
+app.use(fileUpload({ limits: { fileSize: 50 * 1024 * 1024 } }));
 
 // controllers
 app.get('/', (req, res) => res.send('API Backend'));
