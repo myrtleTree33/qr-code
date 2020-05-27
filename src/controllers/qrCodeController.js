@@ -26,7 +26,7 @@ routes.post(
   validateReqMiddleware,
   async (req, res) => {
     try {
-      const { text, width, logo } = req.body;
+      const { text, width = 100, logo } = req.body;
 
       let qrCodeCanvas = await genQrCodeCanvas({ text, width });
 
@@ -34,6 +34,7 @@ routes.post(
         qrCodeCanvas = await overlayLogo({
           canvas: qrCodeCanvas,
           logoB64Str: logo,
+          width,
         });
       }
 

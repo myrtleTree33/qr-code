@@ -37,7 +37,7 @@ app.use(fileUpload({ limits: { fileSize: 50 * 1024 * 1024 } }));
 
 // controllers
 app.get('/', (req, res) => res.send('API Backend'));
-app.use('/sample', sampleController);
+// app.use('/sample', sampleController);
 app.use('/qrcode', qrCodeController);
 
 // start app
