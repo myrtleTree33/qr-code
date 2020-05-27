@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { body, param, query } from 'express-validator';
 import { logger } from '../utils/logger';
 import { validateReqMiddleware } from '../middleware/validateMiddleware';
+import { genQrCodeCanvas, overlayLogo } from '../services/qrCodeService';
 
 const routes = Router();
 
@@ -17,13 +18,26 @@ routes.get('/', async (req, res) => {
  */
 routes.post(
   '/generate',
-  [body('text').notEmpty().isString(), body('width').optional().isNumeric()],
+  [
+    body('text').notEmpty().isString(),
+    body('width').optional().isNumeric(),
+    body('logo').optional().isString(),
+  ],
   validateReqMiddleware,
   async (req, res) => {
     try {
-      const { text, width } = req.body;
+      const { text, width, logo } = req.body;
 
-      const b64ImgUrl = await QRCode.toDataURL(text, { width: width || 100 });
+      let qrCodeCanvas = await genQrCodeCanvas({ text, width });
+
+      if (logo) {
+        qrCodeCanvas = await overlayLogo({
+          canvas: qrCodeCanvas,
+          logoB64Str: logo,
+        });
+      }
+
+      const b64ImgUrl = qrCodeCanvas.toDataURL();
 
       return res.json({ b64ImgUrl });
     } catch (e) {
